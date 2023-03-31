@@ -1,0 +1,42 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+black = ">=23.1.0"
+mypy = ">=1.1.1, <2.0"
+pytest = ">=7.2.2, <8.0"
+pytest-cov = ">=4.0.0, <5.0"
+pytest-mock = ">=3.10.0, <4.0"
+pytest-testmon = ">=1.4.5, <2.0"
+pytest-watch = ">=4.2.0, <5.0"
+ruff = "*"
+
+[scripts]
+alembic-revision = "alembic revision --autogenerate"
+alembic-latest = "alembic upgrade head"
+coverage = "pytest --cov=src --cov-fail-under=0 --cov-report term-missing"
+lint = "ruff check ."
+lint-fix = "ruff check --fix ."
+fmt = "black --check src tests"
+fmt-fix = "black src tests"
+mypy = "mypy --config-file ./mypy.ini src"
+ptw = "pytest-watch --runner \"pytest --testmon\""
+setup = """bash -c "git config core.hooksPath .githooks && \
+            chmod +x .githooks/pre-* && \
+            cp -n default.env .env && \
+            pipenv install --dev" """
+start = "flask run"
+
+[requires]
+python_version = "3"
+
+[packages]
+alembic = "==1.10.2"
+asyncpg = "==0.27.0"
+fastapi = "==0.95.0"
+psycopg2-binary = "==2.9.5"
+sqlalchemy = "==2.0.7"
+uvicorn = "==0.21.1"

@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  demo-api:
+    build: .
+    image: demo-api:latest
+    ports:
+      - '8765:8765'
+    env_file:
+      - .env
+  db:
+    image: postgres:14.2
+    container_name: postgres-alembic-stuff
+    restart: always
+    environment:
+      - POSTGRES_USER=alembic-stuff
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=alembic-stuff
+    ports:
+      - '5555:5432'
+    volumes:
+      - alembic-stuff-data:/var/lib/postgresql/data
+
+volumes:
+  alembic-stuff-data:
+
